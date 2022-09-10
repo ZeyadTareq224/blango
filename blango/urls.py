@@ -22,3 +22,4 @@ urlpatterns = [
     path("post/<slug>/", post_detail, name="blog-post-detail")
 
 ]
+
