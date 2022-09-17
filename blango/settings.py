@@ -16,6 +16,45 @@ class Dev(Configuration):
   SECRET_KEY = "django-insecure-ym=d)ft4%)xiukqr&tgstl6i2091+x_#&o%*%n6g^epgy(bpd6"
   # SECURITY WARNING: don't run with debug turned on in production!
   DEBUG = values.BooleanValue(True)
+  LOGGING = {
+      "version": 1,
+      "disable_existing_loggers": False,
+      "filters": {
+        "require_debug_false": {
+            "()": "django.utils.log.RequireDebugFalse",
+        },
+      },
+      "formatters": {
+          "verbose": {
+              "format": "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
+              "style": "{",
+          },
+      },
+      "handlers": {
+          "console": {
+              "class": "logging.StreamHandler",
+              "stream": "ext://sys.stdout",
+              "formatter": "verbose",
+          },
+          "mail_admins": {
+            "level": "ERROR",
+            "class": "django.utils.log.AdminEmailHandler",
+            "filters": ["require_debug_false"],
+          },
+      },
+      "loggers": {
+        "django.request": {
+            "handlers": ["mail_admins"],
+            "level": "ERROR",
+            "propagate": True,
+        },
+      },
+      "root": {
+          "handlers": ["console"],
+          "level": "DEBUG",
+      },
+  }
+
 
 
   ALLOWED_HOSTS = values.ListValue(["localhost", "0.0.0.0", ".codio.io"])
