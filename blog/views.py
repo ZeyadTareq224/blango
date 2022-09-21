@@ -3,13 +3,18 @@ from django.utils import timezone
 from blog.models import Post
 from django.shortcuts import redirect
 from blog.forms import CommentForm
-
 # Create your views here.
+import logging
+
+logger = logging.Logger(__name__)
+
+
 
 def index(request):
-  posts = Post.objects.filter(published_at__lte=timezone.now())
-  context = {'posts': posts}
-  return render(request, "blog/index.html", context)
+    posts = Post.objects.filter(published_at__lte=timezone.now())
+    logger.debug("Got %d posts", len(posts))
+    return render(request, "blog/index.html", {"posts": posts})
+
 
 
 def post_detail(request, slug):
