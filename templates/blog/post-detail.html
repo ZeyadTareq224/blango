@@ -12,7 +12,13 @@
         {{ post.content|safe }}
     </div>
 {% endrow %}
+{% if post.author.profile %}
+        <h4>About the author</h4>
+        <p>{{ post.author.profile.bio }}</p>
+{% endif %}
+
 {% include "blog/post-comments.html" %}
+
 
 {% row %}
     <div class="col">
